@@ -8,8 +8,6 @@
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
-#include <math.h>
-#include <omp.h>
 using namespace std;
 
 /// function prototypes
@@ -32,6 +30,10 @@ int main(int argc, char const *argv[])
         check_factor(number, j);
         j++;
     }
+    if(largestFactor == 0)
+    {
+        largestFactor = number;
+    }
     cout << largestFactor << endl;
     return 0;
 }
@@ -51,7 +53,6 @@ bool is_prime(long long j)
 {
     if(j >= 2)
     {
-        #pragma omp parallel for schedule(dynamic) num_threads(16)
         for(int i = 2; i <= (j / 2); i++)
         {
             if(j % i == 0)
@@ -63,4 +64,4 @@ bool is_prime(long long j)
     return true;
 }
 
-//600851475143
+//600851475143 is the number project Euler tests with.
