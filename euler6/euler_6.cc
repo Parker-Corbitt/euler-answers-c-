@@ -14,8 +14,13 @@ using namespace std;
 
 /// function prototypes
 
-// Make this parallel by finding the first 10k prime numbers in parallel
-
+/**
+ * @brief determines if number is prime through use of mod operator
+ * 
+ * @param j the number to be checked
+ * @return true - is prime
+ * @return false - is not prime
+ */
 bool is_prime(long long j);
 
 int main(int argc, char const *argv[])
@@ -47,7 +52,7 @@ int main(int argc, char const *argv[])
 
 bool is_prime(long long j)
 {
-    if(j == 0 || j == 1)
+    if(j == 0 || j == 1)                            //0 and 1 are not prime
     {
         return false;
     }
@@ -57,9 +62,9 @@ bool is_prime(long long j)
         {
             if (j % i == 0)
             {
-                return false;
+                return false;                       //if it has a factor here, its not prime
             }
         }
     }
-    return true;
+    return true;                                    //its prime
 }

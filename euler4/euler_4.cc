@@ -13,6 +13,10 @@ using namespace std;
 
 /// function prototypes
 
+/**
+ * @brief checks if the specified number is aa palindrome
+ * 
+ */
 bool isPalindrome(int number);
 int LARGEST_PALINDROME = 0;
 

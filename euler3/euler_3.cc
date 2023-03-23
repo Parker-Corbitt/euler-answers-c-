@@ -14,7 +14,14 @@ using namespace std;
 
 long long largestFactor = 0;
 
+/**
+ * @brief checks if 'j' is a factor of 'number'
+ */
 void check_factor(long long number, long long j);
+
+/**
+ * @brief checks if 'j' is a prime  number
+ */
 bool is_prime(long long j);
 
 int main(int argc, char const *argv[])

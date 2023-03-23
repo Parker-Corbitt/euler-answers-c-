@@ -11,6 +11,12 @@
 using namespace std;
 
 /// function prototypes
+
+/**
+ * @brief checks if every number between 1 and 20 (inclusive) can go evenly into 'number'
+ * 
+ * @param number the number to be checked
+ */
 bool isAllMultiple(long number);
 
 int main(int argc, char const *argv[])
