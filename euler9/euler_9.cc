@@ -12,22 +12,38 @@ using namespace std;
 
 /// function prototypes
 
-bool is_triple(int a, int b, int c);
+bool generate_triple(int n, int m);
+int product = 0;
 
 int main(int argc, char const *argv[])
 {
-    
+    for(int n = 0; n < 33; n++)
+    {
+        for(int m = 0; m < 33;m++)
+        {
+            if(generate_triple(n, m) == true)
+            {
+                cout << product << endl;
+                break;
+            }
+        }
+    }
     return 0;
+
 } // main
 
-bool is_triple(int a, int b, int c)
+bool generate_triple(int n, int m)
 {
-    int asq = a * a;
-    int bsq = b * b;
-    int csq = c * c;
+    int a, b, c;
 
-    if(csq == (asq + bsq))
+    a = (m * m) - (n * n);
+    b = 2 * n * m;
+    c = (n * n) + (m * m);
+
+    int total = a + b + c;
+    if(total == 1000)
     {
+        product = a * b * c;
         return true;
     }
 
