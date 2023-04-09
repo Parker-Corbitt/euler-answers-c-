@@ -17,9 +17,9 @@ int product = 0;
 
 int main(int argc, char const *argv[])
 {
-    for(int n = 0; n < 33; n++)
+    for(int n = 0; n < 31; n++)             ///I chose 31 for these  because 31 is the first integer squared that is greater than 1000, my target
     {
-        for(int m = 0; m < 33;m++)
+        for(int m = 0; m < 31;m++)
         {
             if(generate_triple(n, m) == true)
             {
