@@ -1,7 +1,7 @@
 /**
  *        @file: euler10.cc
  *      @author: Parker Corbitt
- *        @date: April 10, 2023
+ *        @date: April 24, 2023
  *       @brief: Add Description
  */
 
@@ -14,75 +14,109 @@ using namespace std;
 
 ///function prototypes
 
-struct is_prime
+struct index
 {
     int number = 0;
     bool prime = true;
 };
 
-vector<is_prime> number_list;
-long int sum = 0;
+vector<index> list;
 
-void fill_number_list(int limit);
-void Sieve_E();
-void add_all_primes();
+void fill_list(vector<index> &list, int limit);
+void mark_composite(vector<index> &list, int limit, int n);
+int  idx_nxt_prime(vector<index> &list, int limit, int n);
+long sum_all_primes(vector<index> &list, int limit);
 
 int main(int argc, char const *argv[]) {
 
-    int limit = 200000;
+    string tmp = argv[1];
 
-    fill_number_list(limit);
-    Sieve_E();
-    add_all_primes();
-    cout << sum << endl;
+    //Since the first prime number is 2, two will be at index 0. Therefore, the limit of primes will be at the index 2 below the number. Fix  this comment later
+    int limit = stoi(tmp) - 2;
+
+    int n = 2;
+    int index_n = n - 2;
+
+    fill_list(list, limit);
+
+
+    //debugging for fill_list.
+    /**for(int i = 0; i < limit; i++)
+    {
+        cout << list[i].number;
+    }**/
+    while(n != limit)
+    {
+        mark_composite(list, limit, n);
+        n = idx_nxt_prime(list, limit, n);
+        if(n == -1)
+        {
+            break;
+        }
+    }
+
+    /**for(int i = 0; i < limit; i++)
+    {
+        if(list[i].prime == true)
+        {
+            cout << list[i].number << endl;
+        }
+    }**/
+
+    long total = sum_all_primes(list, limit);
     
+    cout << "The sum of all primes below " << limit + 2 << " is " << total << endl;
+
     return 0;
 }// main
 
-
-void fill_number_list(int limit)
-{
-    cout << "filling the list" << endl;
-      //  1 and 0 shouldn't be considered;
-    for(int i = 2; i < limit; i++)
+void fill_list(vector<index> &list, int limit)
+{   
+    index a;
+    int starting_number = 2;
+    for(int i = 0; i < limit; i++)
     {
-        is_prime iteration;
-        iteration.number = i;
-        number_list.push_back(iteration);
+        a.number = starting_number;
+        list.push_back(a);
+        starting_number++;
     }
-
 }
 
-void Sieve_E()
+void mark_composite(vector<index> &list, int limit, int n)
 {
-    cout << "doing the sieve..." << endl;
-    int p = 2;
-    int p_limit = number_list.size() / 2;
-    while(p != p_limit)
+    #pragma omp parallel for
+    for(int i = 0; i < limit; i++)
     {
-        #pragma omp parallel for num_threads(16)
-        for(int i = 0; i < number_list.size(); i++)
+        if(list[i].number % n == 0 && list[i].number != n)
         {
-            if(number_list[i].number % p == 0 && number_list[i].prime == true)
-            {
-                number_list[i].prime == false;
-                
-            }
-            
+            list[i].prime = false;
         }
-        p++;
     }
-
 }
 
-void add_all_primes()
+int idx_nxt_prime(vector<index> &list, int limit, int n)
 {
-    cout << "adding..." << endl;
-    for(int i = 0; i < number_list.size(); i++)
+    for(int i = n - 1; i < limit; i++)
     {
-        if(number_list[i].prime  == true)
+        if(list[i].prime == true)
         {
-            sum += number_list[i].number;
+            return list[i].number;
         }
     }
+
+    return -1;
+}
+
+long sum_all_primes(vector<index> &list, int limit)
+{
+    long sum = 0;
+    for(int i = 0; i < limit; i++)
+    {
+        if(list[i].prime == true)
+        {
+            sum += list[i].number;
+        }
+    }
+
+    return sum;
 }
