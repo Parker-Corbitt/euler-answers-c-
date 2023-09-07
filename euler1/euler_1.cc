@@ -15,9 +15,9 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    int sum = 0;
+    long sum = 0;
 
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 10000; i++)
     {
         if ((i % 3 == 0) || (i % 5 == 0))
         {
@@ -27,20 +27,29 @@ int main(int argc, char const *argv[])
 
     cout << sum << endl;
 
-//I was playing around with multithreading here. The below runs significantly slower, and I have a feeling it has to do with
-//the overhead of creating threads, waiting for them all to do things individually, and then closing them. Premature parallelization
-//is the root of all evil as Dr. Ostermann says
+//I was playing around with multithreading here. I have successfully made it to where
+//this runs pretty much just as fast as the sequential version, but when scaled it
+//runs a good deal faster.
 
-/** sum = 0;
-#pragma omp parallel for
-    for (int i = 0; i < 100000000; i++)
-    {
-        if ((i % 3 == 0) || (i % 5 == 0))  
-        {
-#pragma omp critical
-            sum += i;
-        }
-    }
-    cout << sum << endl;**/
+    // long x[8];
+    // for(int i = 0; i < 8; i++)
+    // {
+    //     x[i] = 0;
+    // }
+
+    // #pragma omp parallel for num_threads (8)
+    // for (int i = 0; i < 100000; i++)
+    // {
+    //     if ((i % 3 == 0) || (i % 5 == 0))  
+    //     {
+    //         x[omp_get_thread_num()] += i;
+    //     }
+    // }
+
+    // for(int i = 0; i < 8; i++)
+    // {
+    //     sum += x[i];
+    // }
+    // cout << sum << endl;
     return 0;
 } // main
